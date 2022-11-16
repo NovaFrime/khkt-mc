@@ -1,12 +1,6 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyDvKfYsDPCFB1ZNIXIoJM7-7sM6BsSG2EY",
   authDomain: "jacky-3802e.firebaseapp.com",
   projectId: "jacky-3802e",
@@ -15,10 +9,9 @@ const firebaseConfig = {
   appId: "1:131268859572:web:ceeb9038cdc8d173b269e1",
   measurementId: "G-KM53CM1M34"
 };
-
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+firebase.initializeApp(firebaseConfig);
+// Initialize variables
 const auth = firebase.auth()
 const database = firebase.database()
 
@@ -28,8 +21,8 @@ function register () {
   email = document.getElementById('email').value
   password = document.getElementById('password').value
   full_name = document.getElementById('full_name').value
-  favourite_song = document.getElementById('favourite_song').value
-  milk_before_cereal = document.getElementById('milk_before_cereal').value
+  password_2 = document.getElementById('password_2').value
+  jacky_code = document.getElementById('jacky_code').value
 
   // Validate input fields
   if (validate_email(email) == false || validate_password(password) == false) {
@@ -37,11 +30,13 @@ function register () {
     return
     // Don't continue running the code
   }
-  if (validate_field(full_name) == false || validate_field(favourite_song) == false || validate_field(milk_before_cereal) == false) {
+  if (validate_field(full_name) == false || validate_field(password_2) == false) {
     alert('One or More Extra Fields is Outta Line!!')
     return
   }
- 
+  if (jacky_code != "JGPS438") {
+    alert('Mã của thiết bị sai! Vui lòng nhập lại')
+  }
   // Move on with Auth
   auth.createUserWithEmailAndPassword(email, password)
   .then(function() {
@@ -55,8 +50,8 @@ function register () {
     var user_data = {
       email : email,
       full_name : full_name,
-      favourite_song : favourite_song,
-      milk_before_cereal : milk_before_cereal,
+      password_2 : password_2,
+      jacky_code : jacky_code,
       last_login : Date.now()
     }
 
